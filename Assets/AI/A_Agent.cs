@@ -7,55 +7,57 @@ public class A_Agent : MonoBehaviour
     [SerializeField, Range(0, 10)] float speed = 2;
     [SerializeField] Transform target = null;
     [SerializeField] AT_Task[] tasks = null;
-    //[SerializeField] List<A_Task> task = new List<A_Task>();
+    [SerializeField] bool gotTarget = false;
+
 
     public Transform Target => target;
 
+    public Transform otherTarget = null;
     public void SetTarget(Transform _target) => target = _target;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        MoveTo();
-    }
+    public bool IsValid => target;
 
 
-    public bool IsAtPos => Vector3.Distance(transform.position, target.position) < 0.1f;
+    void Update() => MoveTo();
+
+    public bool GotTarget => gotTarget;
 
     void MoveTo()
     {
+        if (!IsValid) return;
         for (int i = 0; i < tasks.Length; i++)
         {
             SetTarget(tasks[i].Target);
             if (tasks[i].IsValidStartHour)
             {
-                transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * speed);
+                gotTarget = true;
+                transform.position = Vector3.MoveTowards(transform.position, target.position + Vector3.forward, Time.deltaTime * speed);
                 transform.LookAt(target.position);
+                otherTarget = tasks[i].Target;
             }
-
         }
     }
 
 
     private void OnDrawGizmos()
     {
-        if (IsAtPos)
-        {
-            Gizmos.color = Random.ColorHSV();
-            Gizmos.DrawSphere(transform.position + (Vector3.up * 2), 0.5f);
-        }
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position + (Vector3.up * 2), 0.5f);
+        DrawTarget(IsValid, Color.green, 4);
+        DrawTarget(gotTarget, Color.cyan, 2);
     }
 
+    void DrawTarget(bool _status, Color _color, int _multiplicator)
+    {
+        if (_status)
+        {
+            Gizmos.color = _color;
+            Gizmos.DrawSphere(transform.position + (Vector3.up * _multiplicator), 0.5f);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position + (Vector3.up * _multiplicator), 0.5f);
+        }
+    }
 
 
 }

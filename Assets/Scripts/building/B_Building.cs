@@ -20,12 +20,14 @@ public class B_Building : MonoBehaviour
     }
     public Color BuildingColor => buildingColor;
 
+    public Locations Loc => loc;
+
     public int OpenHour => openHour;
     public int CloseHour => closeHour;
 
     public bool IsOpen => isOpen;
 
-    public void SetColor(Color _color) => buildingColor = _color;
+    public void SetColorOffice(Color _color) => buildingColor = _color;
 
 
 
@@ -55,20 +57,7 @@ public class B_Building : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        //Locations work= Locations.office;
-        //Locations sleep= Locations.house;
-        //Locations essence= Locations.gasoil;
-
-
-        //if(work.CompareTo(sleep))
-        //Debug.Log(work);
-        //    buildingColor = Color.green;
-
-        //if (Locations.house.Equals(true))
-        //    buildingColor = Color.cyan;
-
-        //if (Locations.gasoil.Equals(true))
-        //    buildingColor = Color.yellow;
+  
 
 
         Gizmos.color = buildingColor;

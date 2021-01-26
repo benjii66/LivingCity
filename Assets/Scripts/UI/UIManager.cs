@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
-    [SerializeField] Canvas canva = null;
     [SerializeField] TMP_Text hour = null;
     [SerializeField] M_DayTime time = null;
 

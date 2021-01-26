@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class M_DayTime : MonoBehaviour
+public class M_DayTime : Singleton<M_DayTime>
 {
     [SerializeField, Range(0, 10)] float timeSpeed = 2;
     [SerializeField] int dayHour = 0;
